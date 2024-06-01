@@ -1,0 +1,128 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  background-color: #f8f8f8;
+  padding: 10px 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.search input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.cart {
+  margin-left: 20px;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.aboutSection {
+  text-align: center;
+}
+
+.breadcrumbs {
+  color: #888;
+  margin: 10px 0;
+}
+
+.aboutContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+@media (min-width: 768px) {
+  .aboutContent {
+    flex-direction: row;
+  }
+}
+
+.text {
+  text-align: left;
+}
+
+.contactButton {
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.features {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.featureList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.feature {
+  width: 200px;
+  text-align: center;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.companyInfo {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.footerLinks {
+  display: flex;
+  flex: 2;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.column {
+  margin: 20px 0;
+  flex: 1;
+}
+
+.column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.column ul li {
+  margin: 10px 0;
+}
