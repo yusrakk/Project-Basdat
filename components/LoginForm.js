@@ -1,5 +1,5 @@
-// components/LoginForm.js
 import React, { useState } from 'react';
+import { GoogleLogin } from 'react-google-login';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -18,14 +18,14 @@ const LoginForm = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Add Google login logic here
-    console.log('Google login');
+  const handleGoogleSuccess = (response) => {
+    // Handle Google login success
+    console.log('Google login successful with:', response);
   };
 
-  const handleSignUp = () => {
-    // Add sign up logic here
-    console.log('Redirect to sign up');
+  const handleGoogleFailure = (error) => {
+    // Handle Google login failure
+    console.error('Google login failed:', error);
   };
 
   const toggleShowPassword = () => {
@@ -72,13 +72,14 @@ const LoginForm = () => {
         </>
       ) : (
         <div className="mt-4 flex flex-col space-y-4">
-          <button
-            type="button"
-            onClick={handleGoogleLogin}
+          <GoogleLogin
+            clientId="YOUR_GOOGLE_CLIENT_ID"
+            buttonText="Sign in with Google"
+            onSuccess={handleGoogleSuccess}
+            onFailure={handleGoogleFailure}
+            cookiePolicy={'single_host_origin'}
             className="flex items-center justify-center px-4 py-2 bg-red-500 text-white rounded-md"
-          >
-            <img src="/google-logo.png" alt="Google" className="w-4 h-4 mr-2" /> Sign Up with Google
-          </button>
+          />
           <button
             type="button"
             onClick={handleSignUp}
