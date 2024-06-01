@@ -10,6 +10,7 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "axios": "^1.7.2",
     "mysql2": "^3.10.0",
     "next": "14.2.3",
@@ -17,6 +18,14 @@
     "react-dom": "^18",
     "react-google-login": "^5.2.2"
 =======
+=======
+    "axios": "^1.7.2",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.10.0",
+>>>>>>> 73931b6 (config login to database)
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
