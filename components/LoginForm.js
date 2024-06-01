@@ -1,18 +1,21 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { GoogleLogin } from 'react-google-login';
 =======
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 >>>>>>> 73931b6 (config login to database)
+=======
+// components/LoginForm.js
+import React, { useState } from 'react';
+>>>>>>> 6428d8f (second commit config login to database)
 
-const AuthPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
-  const [error, setError] = useState(null);
-  const router = useRouter();
+const LoginForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [userExists, setUserExists] = useState(true); // Simulated state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,32 +41,12 @@ const AuthPage = () => {
         setError("An error occurred while logging in");
       }
     } else {
-      // Proses sign up
-      if (password !== confirmPassword) {
-        setError("Password and confirm password do not match");
-        return;
-      }
-      try {
-        const response = await fetch("/api/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
-        if (response.ok) {
-          router.push("/home");
-        } else {
-          const data = await response.json();
-          setError(data.error || "Failed to sign up");
-        }
-      } catch (error) {
-        console.error("Error signing up:", error);
-        setError("An error occurred while signing up");
-      }
+      // Add login logic here
+      console.log('Logging in with', email, password);
     }
   };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   const handleGoogleSuccess = (response) => {
     // Handle Google login success
@@ -73,12 +56,23 @@ const AuthPage = () => {
   const handleGoogleFailure = (error) => {
     // Handle Google login failure
     console.error('Google login failed:', error);
+=======
+  const handleGoogleLogin = () => {
+    // Add Google login logic here
+    console.log('Google login');
+  };
+
+  const handleSignUp = () => {
+    // Add sign up logic here
+    console.log('Redirect to sign up');
+>>>>>>> 6428d8f (second commit config login to database)
   };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+<<<<<<< HEAD
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-8 shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
@@ -135,6 +129,8 @@ const AuthPage = () => {
             Create an account manually
           </button>
 =======
+=======
+>>>>>>> 6428d8f (second commit config login to database)
   return (
     <div className="max-w-md mx-auto bg-white p-8 shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-6 text-center">
@@ -186,21 +182,27 @@ const AuthPage = () => {
               className="w-full px-4 py-2 border rounded-md"
             />
           </div>
-        )}
-        <button
-          type="submit"
-          className="w-full px-4 py-2 bg-black text-white rounded-md"
-        >
-          {isLogin ? "Login" : "Sign Up"}
-        </button>
-      </form>
-      <p className="mt-4 text-center">
-        {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-        <button className="text-blue-500" onClick={() => setIsLogin(!isLogin)}>
-          {isLogin ? "Sign up here" : "Login here"}
-        </button>
-      </p>
-    </div>
+          <button type="submit" className="w-full px-4 py-2 bg-black text-white rounded-md">Login</button>
+        </>
+      ) : (
+        <div className="mt-4 flex flex-col space-y-4">
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="flex items-center justify-center px-4 py-2 bg-red-500 text-white rounded-md"
+          >
+            <img src="/google-logo.png" alt="Google" className="w-4 h-4 mr-2" /> Sign Up with Google
+          </button>
+          <button
+            type="button"
+            onClick={handleSignUp}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+          >
+            Create an account manually
+          </button>
+        </div>
+      )}
+    </form>
   );
 };
 

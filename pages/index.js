@@ -201,7 +201,11 @@ const Home = () => {
           <button className="px-4 py-2 bg-black text-white rounded-md">
             Search
           </button>
+<<<<<<< HEAD
 >>>>>>> 73931b6 (config login to database)
+=======
+>>>>>>> dev-sekar
+>>>>>>> 6428d8f (second commit config login to database)
         </div>
     );
 };
