@@ -9,12 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^1.7.2",
     "mysql2": "^3.10.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "react-google-login": "^5.2.2"
+=======
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-icons": "^5.2.1"
+>>>>>>> 1d03448 (add profile edit)
   },
   "devDependencies": {
     "eslint": "^8",
