@@ -23,7 +23,6 @@ const Home = () => {
       return;
     }
 
-    // Stok hampir habis
     const stock = parseInt(formData.stock);
     if (!isNaN(stock) && stock < 6) {
       alert('Stok barang hampir habis!');
@@ -35,14 +34,20 @@ const Home = () => {
   };
 
   const validateFormData = (data) => {
-    const { id, name, colors, stock } = data;
-    if (!id || isNaN(parseInt(id)) || !name || !colors || !stock || isNaN(parseInt(stock))) {
+    const { name, colors, stock } = data;
+    if (!name || !colors || !stock || isNaN(parseInt(stock))) {
       return { error: 'Data tidak lengkap atau salah' };
     }
     return { error: '' };
   };
 
   const editProduct = () => {
+    const validationResult = validateFormData(formData);
+    if (validationResult.error) {
+      setError(validationResult.error);
+      return;
+    }
+
     setProducts(products.map((product) =>
       product.id === formData.id ? formData : product
     ));
@@ -57,6 +62,7 @@ const Home = () => {
   const handleEditClick = (product) => {
     setFormData(product);
     setIsEditing(true);
+    setAddingProduct(false); // hide add product form if it's open
   };
 
   const resetFormData = () => {
@@ -89,43 +95,35 @@ const Home = () => {
               </tr>
             </thead>
             <tbody>
-            {products.map((product) => (
-            <tr key={product.id}>
-                <td style={styles.tableData}>{product.id}</td>
-                <td style={styles.tableData}>{product.name}</td>
-                <td style={styles.tableData}>{product.price}</td>
-                <td style={styles.tableData}>{product.sizes.join(', ')}</td>
-                <td style={styles.tableData}>{product.colors}</td>
-                <td style={{ ...styles.tableData, color: product.stock < 6 ? 'red' : 'inherit' }}>
-                {product.stock}
-                {product.stock < 6 && <span> (Stok Rendah)</span>}
-                </td>
-                <td style={styles.tableData}>
-                <button onClick={() => handleEditClick(product)} style={{ ...styles.button, backgroundColor: 'blue', marginRight: '5px' }}>
-                    <i className="fas fa-pencil-alt" style={{ marginRight: '5px' }}></i>Edit
-                </button>
-                <button onClick={() => deleteProduct(product.id)} style={{ ...styles.button, backgroundColor: 'red' }}>
-                    <i className="fas fa-trash-alt" style={{ marginRight: '5px' }}></i>Delete
-                </button>
-                </td>
-            </tr>
-            ))}
-
+              {products.map((product) => (
+                <tr key={product.id}>
+                  <td style={styles.tableData}>{product.id}</td>
+                  <td style={styles.tableData}>{product.name}</td>
+                  <td style={styles.tableData}>{product.price}</td>
+                  <td style={styles.tableData}>{product.sizes.join(', ')}</td>
+                  <td style={styles.tableData}>{product.colors}</td>
+                  <td style={{ ...styles.tableData, color: product.stock < 6 ? 'red' : 'inherit' }}>
+                    {product.stock}
+                    {product.stock < 6 && <span> (Stok Rendah)</span>}
+                  </td>
+                  <td style={styles.tableData}>
+                    <button onClick={() => handleEditClick(product)} style={{ ...styles.button, backgroundColor: 'blue', marginRight: '5px' }}>
+                      <i className="fas fa-pencil-alt" style={{ marginRight: '5px' }}></i>Edit
+                    </button>
+                    <button onClick={() => deleteProduct(product.id)} style={{ ...styles.button, backgroundColor: 'red' }}>
+                      <i className="fas fa-trash-alt" style={{ marginRight: '5px' }}></i>Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
         <div style={styles.formContainer}>
-          {addingProduct ? (
+          {(addingProduct || isEditing) && (
             <div style={styles.form}>
-              <h2 style={styles.heading}>Tambah Produk Baru</h2>
+              <h2 style={styles.heading}>{isEditing ? 'Edit Produk' : 'Tambah Produk Baru'}</h2>
               {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-              <label style={styles.label}>ID Barang:</label>
-              <input
-                type="text"
-                value={formData.id}
-                onChange={(e) => setFormData({ ...formData, id: e.target.value })}
-                style={styles.input}
-              />
               <label style={styles.label}>Nama Barang:</label>
               <input
                 type="text"
@@ -165,10 +163,15 @@ const Home = () => {
                 onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                 style={styles.input}
               />
-              <button onClick={addProduct} style={styles.button}>Tambah Produk</button>
-              <button onClick={() => setAddingProduct(false)} style={styles.button}>Batal</button>
+              <button onClick={isEditing ? editProduct : addProduct} style={styles.button}>
+                {isEditing ? 'Edit Produk' : 'Tambah Produk'}
+              </button>
+              <button onClick={() => { resetFormData(); setIsEditing(false); setAddingProduct(false); }} style={styles.button}>
+                Batal
+              </button>
             </div>
-          ) : (
+          )}
+          {!isEditing && !addingProduct && (
             <button onClick={() => setAddingProduct(true)} style={styles.button}>Tambah Barang Baru</button>
           )}
         </div>
@@ -198,7 +201,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     padding: '20px',
-   
     border: '1px solid #ccc',
     borderRadius: '5px',
     backgroundColor: '#f9f9f9',
@@ -240,7 +242,6 @@ const styles = {
     padding: '10px',
     textAlign: 'left',
   },
-  };
-  
-  export default Home;
-  
+};
+
+export default Home;
