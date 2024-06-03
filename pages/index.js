@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> fec4d51fd910e729239c3ebd80b42066b24f9094
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useState } from 'react';
@@ -86,6 +90,7 @@ const products = [
         rating: 4.3,
     },
 ];
+<<<<<<< HEAD
 
 const Home = () => {
   const [cart, setCart] = useState([]);
@@ -177,6 +182,127 @@ const Home = () => {
                 </div>
             </main>
             <Footer />
+=======
+
+const Home = () => {
+  const [cart, setCart] = useState([]);
+
+  const handleAddToCart = (productId, size, color) => {
+      const userId = 1; // Replace with actual user ID
+      const quantity = 1;
+      const product = products.find(p => p.id === productId);
+
+      axios.post('http://localhost:5000/api/add-to-cart', { userId, productId, sizeId: size, colorId: color, quantity })
+          .then(() => {
+              setCart([...cart, { productId, size, color, quantity }]);
+              alert('Product added to cart');
+          })
+          .catch(err => {
+              console.error(err);
+              alert('Failed to add product to cart');
+          });
+  };
+
+    return (
+        <div>
+            <Navbar />
+            <header className="relative w-full h-[850px] md:h-[750px] lg:h-[650px] xl:h-[600px] overflow-hidden p-10">
+                <div className="w-full h-full overflow-hidden relative rounded-lg">
+                    <img
+                        src="images/orang.jpeg"
+                        alt="Header Image"
+                        className="w-full h-full object-cover rounded-lg"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg">
+                        <div className="text-center">
+                            <h1 className="text-5xl font-bold text-white">Blue Threads</h1>
+                            <p className="text-white mt-2">Temukan koleksi pakaian dan celana katun dengan beragam desain.</p>
+                            <div className="mt-4 flex justify-center">
+                                <input
+                                    type="text"
+                                    placeholder="Cari Produk"
+                                    className="px-4 py-2 border rounded-l-md"
+                                />
+                                <button className="px-4 py-2 bg-sky-500 text-white rounded-r-md">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main className="max-w-7xl mx-auto px-4 py-8">
+                <div className="flex justify-between items-center mb-8">
+                    <div className="text-3xl font-bold">Casual</div>
+                    <div className="flex space-x-4">
+                        <select className="border rounded-md px-4 py-2">
+                            <option>Semua pakaian</option>
+                        </select>
+                        <select className="border rounded-md px-4 py-2">
+                            <option>Semua Harga</option>
+                        </select>
+                        <select className="border rounded-md px-4 py-2">
+                            <option>Ukuran</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {products.map((product) => (
+                        <div key={product.id} className="bg-white shadow-md rounded-md p-4">
+                            <div className="w-full h-60 md:h-72 lg:h-80 xl:h-96 overflow-hidden rounded-md">
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className="w-full h-full object-cover object-center"
+                                />
+                            </div>
+                            <div className="mt-4">
+                                <h2 className="text-lg font-bold">{product.name}</h2>
+                                <p className="text-gray-600">Size: {product.size}</p>
+                                <p className="text-gray-600">Color: {product.color}</p>
+                                <p className="text-gray-600">Rating: {product.rating}</p>
+                                <div className="flex justify-between items-center mt-2">
+                                    <span className="text-xl font-bold">${product.price}</span>
+                                    <button
+                                        className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                                        onClick={() => handleAddToCart(product.id)}
+                                    >
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </main>
+            <Footer />
+=======
+// pages/index.js
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+const Home = () => {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow flex flex-col items-center justify-center px-4 text-center">
+        <h1 className="text-5xl font-bold mb-4">Blue Threads</h1>
+        <p className="text-gray-600 mb-6">
+          Temukan koleksi pakaian dan celana katun dengan beragam desain.
+        </p>
+        <div className="flex justify-center items-center space-x-2">
+          <input
+            type="text"
+            placeholder="Cari Produk"
+            className="px-4 py-2 border rounded-md"
+          />
+          <button className="px-4 py-2 bg-black text-white rounded-md">
+            Search
+          </button>
+<<<<<<< HEAD
+>>>>>>> 73931b6 (config login to database)
+=======
+>>>>>>> dev-sekar
+>>>>>>> 6428d8f (second commit config login to database)
+>>>>>>> fec4d51fd910e729239c3ebd80b42066b24f9094
         </div>
     );
 };
