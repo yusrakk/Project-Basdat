@@ -1,9 +1,9 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-const products = [
+const productsData = [
   {
     id: 1,
     name: "Kaos distro",
@@ -88,33 +88,30 @@ const products = [
 ];
 
 const Home = () => {
-  const [cart, setCart] = useState([]);
+  const router = useRouter();
+  const [products, setProducts] = useState(productsData);
+  const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleAddToCart = (productId, size, color) => {
-    const userId = 1; // Ganti dengan ID pengguna yang sebenarnya
-    const quantity = 1;
-    const product = products.find((p) => p.id === productId);
+  const handleEditClick = (product) => {
+    setFormData(product);
+    setIsEditing(true);
+  };
 
-    axios
-      .post("http://localhost:5000/api/add-to-cart", {
-        userId,
-        productId,
-        sizeId: size,
-        colorId: color,
-        quantity,
-      })
-      .then(() => {
-        setCart([...cart, { productId, size, color, quantity }]);
-        alert("Produk berhasil ditambahkan ke keranjang");
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Gagal menambahkan produk ke keranjang");
-      });
+  const resetFormData = () => {
+    setFormData({
+      id: "",
+      name: "",
+      price: "",
+      sizes: [],
+      colors: "",
+      stock: "",
+    });
+    setError("");
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
       <Navbar />
       <header className="relative w-full h-[850px] md:h-[750px] lg:h-[650px] xl:h-[600px] overflow-hidden p-10">
         <div className="w-full h-full overflow-hidden relative rounded-lg">
@@ -136,14 +133,14 @@ const Home = () => {
                   className="px-4 py-2 border rounded-l-md"
                 />
                 <button className="px-4 py-2 bg-sky-500 text-white rounded-r-md">
-                  Search
+                  Cari
                 </button>
               </div>
             </div>
           </div>
         </div>
       </header>
-      <main className="max-w-7xl mx-auto px-4 py-8 flex-grow">
+      <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div className="text-3xl font-bold">Casual</div>
           <div className="flex space-x-4">
@@ -161,13 +158,11 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <div key={product.id} className="bg-white shadow-md rounded-md p-4">
-              <div className="w-full h-60 md:h-72 lg:h-80 xl:h-96 overflow-hidden rounded-md">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-48 object-cover rounded-md"
+              />
               <div className="mt-4">
                 <h2 className="text-lg font-bold">{product.name}</h2>
                 <p className="text-gray-600">Size: {product.size}</p>
@@ -175,23 +170,41 @@ const Home = () => {
                 <p className="text-gray-600">Rating: {product.rating}</p>
                 <div className="flex justify-between items-center mt-2">
                   <span className="text-xl font-bold">${product.price}</span>
-                  <button
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                    onClick={() =>
-                      handleAddToCart(product.id, product.size, product.color)
-                    }
-                  >
-                    Add to Cart
+                  <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
+                    Tambah ke Keranjang
                   </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
+        <div style={styles.formContainer}>
+          <button
+            onClick={() => router.push("/tambah-produk")}
+            style={styles.button}
+          >
+            Tambah Barang Baru
+          </button>
+        </div>
       </main>
       <Footer />
-    </div>
+    </>
   );
+};
+
+const styles = {
+  formContainer: {
+    width: "300px",
+  },
+  button: {
+    marginBottom: "10px",
+    padding: "10px",
+    border: "none",
+    borderRadius: "5px",
+    backgroundColor: "#007bff",
+    color: "#ffffff",
+    cursor: "pointer",
+  },
 };
 
 export default Home;
